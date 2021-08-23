@@ -11,6 +11,10 @@ project "Sandbox"
         "src/**.h"
     }
 
+    includedirs {
+        "../Phynx/src/"
+    }
+
     links {
         "Phynx"
     }

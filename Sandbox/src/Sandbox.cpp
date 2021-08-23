@@ -1,7 +1,13 @@
 #include <iostream>
+#include <vector>
+#include <Phynx.h>
 
-int main()
+class Sandbox : public PX::Application
 {
-	std::cout << "Hello, World" << std::endl;
-	return 0;
+
+};
+
+PX::Application* PX::CreateApplicationInstance()
+{
+	return new Sandbox();
 }

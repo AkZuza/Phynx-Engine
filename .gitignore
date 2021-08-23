@@ -1,4 +1,6 @@
 /.vs
 **vcx**
-/build**
+**/build**
 **.sln
+**/obj
+**/bin
