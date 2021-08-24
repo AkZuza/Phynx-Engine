@@ -18,7 +18,8 @@ project "Phynx"
         "src/",
         "src/Phynx",
         "libs/glfw/include",
-        "libs/Glad/include"
+        "libs/Glad/include",
+        "libs/spdlog/include"
     }
 
     links {
@@ -26,3 +27,12 @@ project "Phynx"
         "Glad",
         "opengl32",
     }
+
+    filter "configurations:Release"
+        defines { "PX_RELEASE"}
+
+    filter "configurations:Debug"
+        defines { "PX_DEBUG"}
+
+    filter "configurations:Debug"
+        defines { "PX_TEST"}

@@ -1,7 +1,7 @@
 #include "pxpch.h"
 #include "Shader.h"
 #include "Phynx/API/OpenGL/OpenGLShader.h"
-//#include "Renderer.h"
+#include "Logging/Log.h"
 
 namespace PX {
 
@@ -21,6 +21,12 @@ namespace PX {
 		std::stringstream fstream;
 
 		// logging and error checking
+		// if any of the shaders are null pls break
+		if (!in_vs.is_open() || !in_fs.is_open())
+		{
+			PX_CORE_ERROR("One or both of the shaders are not present at the location");
+			return nullptr;
+		}
 
 		while (std::getline(in_vs, line))
 			vstream << line << "\n";

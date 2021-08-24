@@ -1,5 +1,6 @@
 #include "pxpch.h"
 #include "Application.h"
+#include "Logging/Log.h"
 
 // Application with no override will provide an example in this code
 // using a few of the features and typical usage
@@ -16,6 +17,8 @@ namespace PX {
 
 	Application::Application()
 	{
+		PX_LOG_INIT;
+		PX_CORE_INFO("Started Application instance and logging");
 		m_pInstance = this;
 	}
 

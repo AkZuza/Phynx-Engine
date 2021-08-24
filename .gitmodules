@@ -1,3 +1,6 @@
 [submodule "Phynx/libs/glfw"]
 	path = Phynx/libs/glfw
 	url = https://github.com/AkZuza/glfw.git
+[submodule "Phynx/libs/spdlog"]
+	path = Phynx/libs/spdlog
+	url = https://github.com/AkZuza/spdlog.git

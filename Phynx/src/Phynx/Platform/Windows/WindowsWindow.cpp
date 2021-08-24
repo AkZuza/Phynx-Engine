@@ -26,6 +26,9 @@ namespace PX {
 
 		//assert m_pWindow
 
+		// control frame rate
+		glfwSwapInterval(1);
+
 		// Create and bind context
 		m_Context = Context::Create(m_pWindow);
 		

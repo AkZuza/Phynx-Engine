@@ -1,5 +1,6 @@
 #include "pxpch.h"
 #include "OpenGLShader.h"
+#include "Logging/Log.h"
 #include <glad/glad.h>
 
 namespace PX {
@@ -22,10 +23,9 @@ namespace PX {
 				std::vector<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(id, maxLength, &maxLength, &errorLog[0]);
 
-				/*LOG_CORE_INFO("================ {0} Error ===============", shader_type.c_str());
-				LOG_CORE_INFO("{0}", errorLog.data());
-				LOG_CORE_INFO("==========================================");*/
-				// Log it later
+				PX_CORE_WARN("================ {0} Error ===============", shader_type.c_str());
+				PX_CORE_WARN("{0}", errorLog.data());
+				PX_CORE_WARN("==========================================");
 
 				glDeleteShader(id);
 				return;
