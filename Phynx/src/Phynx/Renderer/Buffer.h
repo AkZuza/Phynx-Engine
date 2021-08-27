@@ -33,7 +33,7 @@ namespace PX {
 	};
 
 
-	struct DataElement {
+	struct Element {
 		uint32_t size;
 		DataType type;
 		bool normalize;
@@ -43,18 +43,18 @@ namespace PX {
 	class LayoutData
 	{
 	public:
-		void PushElement(DataElement element)
+		void PushElement(Element element)
 		{
 			stride += element.size;
 			m_elements.push_back(element);
 		}
 
 		uint64_t GetStride() const { return stride; }
-		const std::vector<DataElement>& GetElements() const { return m_elements; }
+		const std::vector<Element>& GetElements() const { return m_elements; }
 
 	private:
 		uint64_t stride = 0;
-		std::vector<DataElement> m_elements;
+		std::vector<Element> m_elements;
 	};
 
 	class VertexBuffer
