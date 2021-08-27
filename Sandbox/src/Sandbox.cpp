@@ -42,10 +42,16 @@ void Sandbox::Start()
 
 	vbo = PX::VertexBuffer::Create(sizeof(vertices), vertices);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, pos));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, col));
+	PX::Element elements[] = {
+			{3, PX::DataType::FLOAT, false, "Pos"},
+			{4, PX::DataType::FLOAT, false, "Col"}
+	};
+
+	PX::LayoutData layout;
+	layout.PushElement(elements[0]);
+	layout.PushElement(elements[1]);
+
+	vbo->ApplyLayout(layout);
 
 	ibo = PX::IndexBuffer::Create(sizeof(indices), indices);
 	std::ifstream v("assets/shaders/vert.shader");
@@ -55,11 +61,10 @@ void Sandbox::Start()
 
 void Sandbox::Update()
 {
-	glClearColor(0.4f, 0.9f, 0.3f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	PX::Renderer::Clear(0.3f, 0.7f, 0.9f, 1.f);
 
 	vao->Bind();
 	shader->Bind();
 
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+	PX::Renderer::DrawIndexed(3);
 }
