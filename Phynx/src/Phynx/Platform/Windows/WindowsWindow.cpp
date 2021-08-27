@@ -1,5 +1,6 @@
 #include "pxpch.h"
 #include "WindowsWindow.h"
+#include "Logging/Log.h"
 
 #define GLFW_INCLUDE_NONE 1
 #include <GLFW/glfw3.h>
@@ -14,9 +15,12 @@ namespace PX {
 
 		if (glfwInit() == GLFW_FALSE)
 		{
-			// Log Error
+			PX_CORE_ERROR("Failed to initialize GLFW");
 			return;
 		}
+
+		// control frame rate
+		glfwSwapInterval(1);
 
 		m_pWindow = glfwCreateWindow(
 			data.Width, data.Height,
@@ -25,9 +29,6 @@ namespace PX {
 		);
 
 		//assert m_pWindow
-
-		// control frame rate
-		glfwSwapInterval(1);
 
 		// Create and bind context
 		m_Context = Context::Create(m_pWindow);
@@ -48,8 +49,8 @@ namespace PX {
 
 	void WindowsWindow::Update()
 	{
-		glfwSwapBuffers((GLFWwindow*)m_pWindow);
 		glfwPollEvents();
+	 	glfwSwapBuffers((GLFWwindow*)m_pWindow);
 	}
 
 }
