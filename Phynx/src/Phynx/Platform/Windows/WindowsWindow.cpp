@@ -52,5 +52,13 @@ namespace PX {
 		glfwPollEvents();
 	 	glfwSwapBuffers((GLFWwindow*)m_pWindow);
 	}
+	
+	WindowsWindow::~WindowsWindow()
+	{
+		m_Context->~Context();
+		m_Context = nullptr;
+		glfwDestroyWindow((GLFWwindow*)m_pWindow);
+		glfwTerminate();
+	}
 
 }

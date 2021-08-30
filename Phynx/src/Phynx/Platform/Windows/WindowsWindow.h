@@ -7,6 +7,7 @@ namespace PX {
 	{
 	public:
 		WindowsWindow(WindowCreateStruct& data);
+		~WindowsWindow();
 		virtual bool IsRunning() override;
 		virtual void Update() override;
 	};
