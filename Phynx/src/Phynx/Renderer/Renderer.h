@@ -1,5 +1,8 @@
 #pragma once
 #include "Phynx/Core/Core.h"
+#include "Phynx/Renderer/VertexArray.h"
+#include "Phynx/Renderer/Buffer.h"
+#include "Phynx/Renderer/Shader.h"
 
 namespace PX {
 
@@ -23,6 +26,9 @@ namespace PX {
 		// draw whatever is currently bound at that time
 		static void Draw(uint32_t count) { m_RendererAPI->Impl_Draw(count); }
 		static void DrawIndexed(uint32_t count) { m_RendererAPI->Impl_DrawIndexed(count); }
+
+		static void Draw(uint32_t count, Shared<VertexBuffer> buffer, Shared<Shader> shader);
+		static void DrawIndexed(uint32_t count, Shared<VertexArray> varray, Shared<Shader> shader);
 
 	protected:
 		// these virtual functions are called by the public static functions
