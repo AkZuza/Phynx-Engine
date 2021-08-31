@@ -1,8 +1,5 @@
 #include "Sandbox.h"
-#include <fstream>
 
-// supppppeerrrrrr temporary and just for fixing gpu usage stuff
-#include <glad/glad.h>
 
 PX::Application* PX::CreateApplicationInstance()
 {
@@ -54,9 +51,7 @@ void Sandbox::Start()
 	vbo->ApplyLayout(layout);
 
 	ibo = PX::IndexBuffer::Create(sizeof(indices), indices);
-	std::ifstream v("assets/shaders/vert.shader");
-	std::ifstream f("assets/shaders/frag.shader");
-	shader = PX::Shader::Create(v, f);
+	shader = PX::Shader::CreateFromFile("assets/shaders/vert.shader", "assets/shaders/frag.shader");
 }
 
 void Sandbox::Update()
