@@ -10,7 +10,8 @@ namespace PX {
 		m_Core = spdlog::stdout_color_mt("Core");
 		m_Client = spdlog::stdout_color_mt("Client");
 
-		spdlog::set_pattern("%n [ %X ] : %v");
+		m_Core->set_pattern("%n [ %X ] : %v");
+		m_Client->set_pattern("%n [ %X ] : %v");
 	}
 
 	std::shared_ptr<spdlog::logger> Log::GetCore()
