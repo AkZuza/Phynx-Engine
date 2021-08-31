@@ -12,13 +12,15 @@ namespace PX {
 		return nullptr;
 	}
 
-	Shared<Shader> Shader::Create(std::ifstream& in_vs, std::ifstream& in_fs)
+	Shared<Shader> Shader::CreateFromFile(const std::string& vertex_shader_path, const std::string& fragment_shader_path)
 	{
 		std::string vs;
 		std::string fs;
 		std::string line;
 		std::stringstream vstream;
 		std::stringstream fstream;
+		std::ifstream in_vs(vertex_shader_path);
+		std::ifstream in_fs(fragment_shader_path);
 
 		// logging and error checking
 		// if any of the shaders are null pls break
