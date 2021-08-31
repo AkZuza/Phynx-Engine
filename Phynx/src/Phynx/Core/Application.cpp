@@ -48,7 +48,7 @@ namespace PX {
 
 		vbo = VertexBuffer::Create(sizeof(vertices), vertices);
 
-		Element elements[] = {
+		VertexElement elements[] = {
 			{3, DataType::FLOAT, false, "Pos"},
 			{4, DataType::FLOAT, false, "Col"}
 		};
@@ -136,9 +136,11 @@ namespace PX {
 
 	void Application::CreateApplicationWindow(WindowCreateStruct& data)
 	{
+		m_Window = Window::Create(data);
+
+
 		// Call the init function here
 		Renderer::Init();
-		m_Window = Window::Create(data);
 	}
 
 

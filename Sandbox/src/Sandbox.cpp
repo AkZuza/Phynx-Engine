@@ -39,7 +39,7 @@ void Sandbox::Start()
 
 	vbo = PX::VertexBuffer::Create(sizeof(vertices), vertices);
 
-	PX::Element elements[] = {
+	PX::VertexElement elements[] = {
 			{3, PX::DataType::FLOAT, false, "Pos"},
 			{4, PX::DataType::FLOAT, false, "Col"}
 	};
