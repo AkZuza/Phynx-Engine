@@ -1,5 +1,6 @@
 #include "pxpch.h"
 #include "Renderer2D.h"
+#include "Renderer.h"
 
 #include "Core/Core.h"
 #include "VertexArray.h"
@@ -33,16 +34,19 @@ namespace PX {
 		uint32_t* IndexPtrBegin = indices;
 		uint32_t* IndexPtrCurr = indices;
 
+		uint32_t IndexValue = 0;
+
 	} s_RendererData;
 
 	void Renderer2D::Init()
 	{
 		s_RendererData.vao = VertexArray::Create();
+		s_RendererData.vao->Bind();
 		
 		// Vertex Buffer
 		s_RendererData.vbo = VertexBuffer::Create(
 			sizeof(s_RendererData.vertices),
-			nullptr,
+			s_RendererData.vertices,
 			{ BufferAccess::DRAW, BufferUsage::DYNAMIC }
 		);
 
@@ -55,7 +59,7 @@ namespace PX {
 
 		s_RendererData.ibo = IndexBuffer::Create(
 			sizeof(s_RendererData.indices),
-			nullptr,
+			s_RendererData.indices,
 			{ BufferAccess::DRAW, BufferUsage::DYNAMIC }
 		);
 
@@ -96,6 +100,80 @@ namespace PX {
 		)";
 
 		s_RendererData.shader = Shader::Create(vertex_source, frag_source);
+
+		s_RendererData.VertexPtrBegin = s_RendererData.vertices;
+		s_RendererData.IndexPtrBegin = s_RendererData.indices;
 	}
+
+
+
+	// Draw calls
+	void Renderer2D::Begin()
+	{
+		s_RendererData.VertexPtrCurr = s_RendererData.vertices;
+		s_RendererData.IndexPtrCurr = s_RendererData.indices;
+		s_RendererData.IndexValue = 0;
+	}
+
+	void Renderer2D::End()
+	{
+
+	}
+
+	void Renderer2D::Flush()
+	{
+		uint32_t vsize = s_RendererData.VertexPtrCurr - s_RendererData.VertexPtrBegin;
+		uint32_t isize = s_RendererData.IndexPtrCurr - s_RendererData.IndexPtrBegin;
+
+		s_RendererData.vbo->Bind();
+		s_RendererData.ibo->Bind();
+		s_RendererData.vbo->SetData(s_RendererData.vertices, vsize * sizeof(RendererData::Vertex));
+		s_RendererData.ibo->SetData(s_RendererData.indices, isize * sizeof(uint32_t));
+
+		Renderer::DrawIndexed(isize, s_RendererData.vao, s_RendererData.shader);
+	}
+
+
+	// Drawing functions
+	void Renderer2D::DrawTriangle(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec4& color)
+	{
+		static uint32_t calls = 0;
+		calls += 1;
+
+		/*
+			Issue
+			After 343 calls,
+			the pointers become dangling for some reason
+			need to check
+
+			To Reproduce, remove the '= s_RendererData.vertices' in Renderer2D::Begin()
+		*/
+
+		*(s_RendererData.VertexPtrCurr++) = { p1.x, p1.y, p1.z, color.r, color.g, color.b, color.a };
+		*(s_RendererData.VertexPtrCurr++) = { p2.x, p2.y, p2.z, color.r, color.g, color.b, color.a };
+		*(s_RendererData.VertexPtrCurr++) = { p3.x, p3.y, p3.z, color.r, color.g, color.b, color.a };
+
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue++;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue++;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue++;
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color)
+	{
+		*(s_RendererData.VertexPtrCurr++) = { pos.x, pos.y, pos.z, color.r, color.g, color.b, color.a };
+		*(s_RendererData.VertexPtrCurr++) = { pos.x + size.x, pos.y, pos.z, color.r, color.g, color.b, color.a };
+		*(s_RendererData.VertexPtrCurr++) = { pos.x + size.x, pos.y + size.y, pos.z, color.r, color.g, color.b, color.a };
+		*(s_RendererData.VertexPtrCurr++) = { pos.x, pos.y + size.y, pos.z, color.r, color.g, color.b, color.a };
+
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue+1;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue+2;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue+2;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue+3;
+		*(s_RendererData.IndexPtrCurr++) = s_RendererData.IndexValue;
+
+		s_RendererData.IndexValue += 4;
+	}
+	
 
 }
