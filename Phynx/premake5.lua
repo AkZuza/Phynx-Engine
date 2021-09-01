@@ -19,7 +19,8 @@ project "Phynx"
         "src/Phynx",
         "libs/glfw/include",
         "libs/Glad/include",
-        "libs/spdlog/include"
+        "libs/spdlog/include",
+        "libs/glm"
     }
 
     links {
