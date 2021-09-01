@@ -5,6 +5,7 @@
 #include "Phynx/Renderer/Buffer.h"
 #include "Phynx/Renderer/Shader.h"
 #include "Phynx/Renderer/Renderer.h"
+#include "Phynx/Renderer/Renderer2D.h"
 
 
 // Entry Point
