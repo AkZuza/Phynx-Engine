@@ -1,4 +1,5 @@
 #include "Sandbox.h"
+#include <Windows.h>
 
 
 PX::Application* PX::CreateApplicationInstance()
@@ -56,10 +57,38 @@ void Sandbox::Start()
 
 void Sandbox::Update()
 {
-	PX::Renderer::Clear(0.3f, 0.7f, 0.9f, 1.f);
+	/*PX::Renderer::Clear(0.3f, 0.7f, 0.9f, 1.f);
 
 	vao->Bind();
 	shader->Bind();
 
-	PX::Renderer::DrawIndexed(3);
+	PX::Renderer::DrawIndexed(3);*/
+
+	// Using renderer2d
+	PX::Renderer::Clear(0.3f, 0.9f, 0.7f, 1.f);
+
+	PX::Renderer2D::Begin();
+
+	static glm::vec2 pos = { 0.f, 0.f, };
+
+	//if (GetAsyncKeyState(VK_RIGHT));
+
+	PX::Renderer2D::DrawTriangle(
+		{ -0.5f, -0.5f, 1.f },
+		{ 0.5f, -0.5f, 1.f },
+		{ 0.0f,  0.5f, 1.f },
+		{ 0.3f, 0.4f, 0.5f, 1.f }
+	);
+
+	PX::Renderer2D::DrawQuad(
+		{ -0.5f, -0.5f, 1.f },
+		{ 0.5f, 0.5f },
+		{ 0.9f, 0.3f, 0.7f, 1.f }
+	);
+
+	PX::Renderer2D::End();
+	PX::Renderer2D::Flush();
+
+	// Pls dont remove this or else gpu usage will rise as much as 99%
+	//Sleep(10);
 }
