@@ -19,9 +19,6 @@ namespace PX {
 			return;
 		}
 
-		// control frame rate
-		glfwSwapInterval(1);
-
 		m_pWindow = glfwCreateWindow(
 			data.Width, data.Height,
 			data.WindowName.c_str(),
@@ -32,6 +29,10 @@ namespace PX {
 
 		// Create and bind context
 		m_Context = Context::Create(m_pWindow);
+
+		// control frame rate
+		glfwSwapInterval(1);
+
 		
 		// set a pointer to the window data struct
 		m_WindowData.WindowName = data.WindowName;
