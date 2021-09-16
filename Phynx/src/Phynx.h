@@ -7,6 +7,9 @@
 #include "Phynx/Renderer/Renderer.h"
 #include "Phynx/Renderer/Renderer2D.h"
 
-
 // Entry Point
 #include "Phynx/Core/EntryPoint.h"
+
+
+// Other common dependencies for the consuming application
+#include <unordered_map>
