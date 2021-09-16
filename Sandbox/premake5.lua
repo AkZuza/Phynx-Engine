@@ -14,7 +14,8 @@ project "Sandbox"
     includedirs {
         "../Phynx/src/",
         "../Phynx/libs/Glad/include",
-        "../Phynx/libs/glm"
+        "../Phynx/libs/glm",
+        "../Phynx/libs/spdlog/include"
     }
 
     links {
