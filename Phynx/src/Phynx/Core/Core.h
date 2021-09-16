@@ -1,6 +1,14 @@
 #pragma once
 #include <memory>
 
+// Debug
+#if defined(PX_DEBUG)
+#	define PX_DEBUGBRK() _debugbreak()
+#else
+#	define PX_DEBUGBRK() 
+#endif
+
+
 namespace PX {
 
 	// Graphics API enumeration
@@ -20,3 +28,8 @@ namespace PX {
 	using Unique = std::unique_ptr<T>;
 
 }
+
+#define BIND_EVENT_FN(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
+#define BIT(x) (1 << x)
+
+#include "Phynx/Logging/Log.h"
