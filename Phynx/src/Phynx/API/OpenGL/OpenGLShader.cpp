@@ -68,4 +68,41 @@ namespace PX {
 		glUseProgram(0);
 	}
 
+#pragma region Uniform Function
+	void OpenGLShader::UploadUniform1f(const std::string& uniform, float v1)
+	{
+		glUniform1f(GetUniform(uniform), v1);
+	}
+
+	void OpenGLShader::UploadUniform2f(const std::string& uniform, float v1, float v2)
+	{
+		glUniform2f(GetUniform(uniform), v1, v2);
+	}
+
+	void OpenGLShader::UploadUniform3f(const std::string& uniform, float v1, float v2, float v3)
+	{
+		glUniform3f(GetUniform(uniform), v1, v2, v3);
+	}
+
+	void OpenGLShader::UploadUniform4f(const std::string& uniform, float v1, float v2, float v3, float v4)
+	{
+		glUniform4f(GetUniform(uniform), v1, v2, v3, v4);
+	}
+
+	uint32_t OpenGLShader::GetUniform(const std::string& uniform)
+	{
+		if (m_Uniforms.find(uniform) == m_Uniforms.end())
+		{
+			uint32_t loc = glGetUniformLocation(m_ID, uniform.c_str());
+			if (loc == -1)
+				PX_CORE_WARN("{0} Uniform not found", uniform);
+
+			m_Uniforms[uniform] = loc;
+		}
+		
+		return m_Uniforms[uniform];
+	}
+
+#pragma endregion
+
 }
