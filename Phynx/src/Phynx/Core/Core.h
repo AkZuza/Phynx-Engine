@@ -3,9 +3,15 @@
 
 // Debug
 #if defined(PX_DEBUG)
-#	define PX_DEBUGBRK() _debugbreak()
+#	if	defined(PX_ENABLE_DEBUGBRK)
+#		define PX_DEBUGBRK() _debugbreak()
+#	endif
+#	if defined(PX_ENABLE_ASSERT)
+#		define PX_ASSERT(x) if(!(x)) {PX_DEBUGBRK(); }
+#	endif
 #else
 #	define PX_DEBUGBRK() 
+#	define PX_ASSERT(x)
 #endif
 
 
