@@ -7,6 +7,10 @@
 #include "Phynx/Renderer/Renderer.h"
 #include "Phynx/Renderer/Renderer2D.h"
 
+#include "Phynx/Input/KeyInput.h"
+#include "Phynx/Input/MouseInput.h"
+
+
 // Entry Point
 #include "Phynx/Core/EntryPoint.h"
 
