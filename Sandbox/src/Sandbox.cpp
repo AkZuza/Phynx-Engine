@@ -11,84 +11,54 @@ uint32_t loc = 0;
 
 void Sandbox::Start()
 {
+	//PX::EventDispatcher::SetEventProc(BIND_EVENT_FN(OnEvent));
 	PX::WindowCreateStruct data;
-	data.Width = 1280;
-	data.Height = 720;
+	data.Width = 900;
+	data.Height = 900;
 	data.WindowName = "Sandbox";
 
 	CreateApplicationWindow(data);
-
-	struct Vertex
-	{
-		float pos[3];
-		float col[4];
-	};
-
-	// initialize
-	Vertex vertices[] = {
-		{-0.5f, -0.5f, 1.f,    1.f, 0.f, 0.f, 1.f},
-		{ 0.5f, -0.5f, 1.f,    0.f, 1.f, 0.f, 1.f},
-		{ 0.0f,  0.5f, 1.f,    0.f, 0.f, 1.f, 1.f},
-	};
-
-	uint32_t indices[] = {
-		0, 1, 2
-	};
-
-	// Create buffers
-	vao = PX::VertexArray::Create();
-
-	vbo = PX::VertexBuffer::Create(sizeof(vertices), vertices);
-
-	PX::VertexElement elements[] = {
-			{3, PX::DataType::FLOAT, false, "Pos"},
-			{4, PX::DataType::FLOAT, false, "Col"}
-	};
-
-	PX::LayoutData layout;
-	layout.PushElement(elements[0]);
-	layout.PushElement(elements[1]);
-
-	vbo->ApplyLayout(layout);
-
-	ibo = PX::IndexBuffer::Create(sizeof(indices), indices);
-	shader = PX::Shader::CreateFromFile("assets/shaders/vert.shader", "assets/shaders/frag.shader");
 }
 
 void Sandbox::Update()
 {
-	/*PX::Renderer::Clear(0.3f, 0.7f, 0.9f, 1.f);
-
-	vao->Bind();
-	shader->Bind();
-
-	PX::Renderer::DrawIndexed(3);*/
-
-	// Using renderer2d
 	PX::Renderer::Clear(0.3f, 0.9f, 0.7f, 1.f);
 
 	PX::Renderer2D::Begin();
-
-	static glm::vec2 pos = { 0.f, 0.f, };
-
-	//if (GetAsyncKeyState(VK_RIGHT));
 
 	PX::Renderer2D::DrawTriangle(
 		{ -0.5f, -0.5f, 1.f },
 		{ 0.5f, -0.5f, 1.f },
 		{ 0.0f,  0.5f, 1.f },
-		{ 0.3f, 0.4f, 0.5f, 1.f }
+		{ 0.3f, 0.7f, 0.8f, 1.f }
 	);
 
-	PX::Renderer2D::DrawQuad(
-		{ -0.5f, -0.5f, 1.f },
-		{ 0.5f, 0.5f },
-		{ 0.9f, 0.3f, 0.7f, 1.f }
-	);
+	std::cout << "Mouse Pos X: " << PX::MouseInput::GetXPos() << "   Y: " << PX::MouseInput::GetYPos() << "\n"; 
 
 	PX::Renderer2D::End();
 	PX::Renderer2D::Flush();
+}
 
-	// Pls dont remove this or else gpu usage will rise as much as 99%
-	//Sleep(10);
+void Sandbox::OnEvent(PX::Event& event)
+{
+	PX::EventDispatcher dispatcher(event);
+
+	/*dispatcher.Dispatch<PX::WindowMoveEvent>([this](PX::Event& event)
+		{
+			this->OnWindowMoveEvent(dynamic_cast<PX::WindowMoveEvent&>(event));
+		});*/
+
+	dispatcher.Dispatch<PX::WindowMoveEvent>(BIND_EVENT_FN(OnWindowMoveEvent));
+	dispatcher.Dispatch<PX::MouseMoveEvent>(BIND_EVENT_FN(OnMouseMoveEvent));
+
+}
+
+void Sandbox::OnWindowMoveEvent(PX::WindowMoveEvent& event)
+{
+	int x = 0;
+}
+
+void Sandbox::OnMouseMoveEvent(PX::MouseMoveEvent& event)
+{
+	std::cout << "Mouse Pos X: " << event.GetXPos() << "   Y: " << event.GetYPos() << std::endl;
 }
