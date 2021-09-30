@@ -3,6 +3,7 @@
 #include "../Renderer/VertexArray.h"
 #include "../Renderer/Buffer.h"
 #include "../Renderer/Shader.h"
+#include "../Event/Event.h"
 #include "../Renderer/Renderer.h"
 
 namespace PX {
@@ -28,6 +29,8 @@ namespace PX {
 		/// </summary>
 		/// <param name="data">The window creation data</param>
 		static void CreateApplicationWindow(WindowCreateStruct& data);
+
+		virtual void OnEvent(Event& event) {}
 
 	protected:
 		virtual void Update();
