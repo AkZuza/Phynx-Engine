@@ -7,3 +7,6 @@
 [submodule "Phynx/libs/glm"]
 	path = Phynx/libs/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Phynx/libs/yaml-cpp"]
+	path = Phynx/libs/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
