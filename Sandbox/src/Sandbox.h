@@ -7,13 +7,8 @@ class Sandbox : public PX::Application
 {
 public:
 	void Start() override;
-	void Update() override;
+	void OnUpdate() override;
 	void OnEvent(PX::Event& event) override;
-
-
-	// callbacks
-	void OnWindowMoveEvent(PX::WindowMoveEvent& event);
-	void OnMouseMoveEvent(PX::MouseMoveEvent& event);
 
 	std::vector<glm::vec2> m_pos;
 

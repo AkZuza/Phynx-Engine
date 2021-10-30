@@ -6,7 +6,8 @@
 #include "Phynx/Renderer/Shader.h"
 #include "Phynx/Renderer/Renderer.h"
 #include "Phynx/Renderer/Renderer2D.h"
-
+#include "Phynx/Renderer/Layer.h"
+#include "Phynx/Renderer/LayerManager.h"
 #include "Phynx/Input/KeyInput.h"
 #include "Phynx/Input/MouseInput.h"
 

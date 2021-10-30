@@ -1,16 +1,21 @@
 #pragma once
 
+
 #define EVENT_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
 							virtual EventType GetType() { return EventType::type; }
+
 
 namespace PX {
 	
 	enum class EventType
 	{
 		None,
-		WindowCloseEvent, WindowMoveEvent, WindowResizeEvent,
 
-		MouseMoveEvent
+		WindowCloseEvent, WindowMoveEvent, WindowResizeEvent, WindowMinimizeEvent, WindowMaximizeEvent,
+
+		MouseMoveEvent, MousePressEvent, MouseReleaseEvent,
+
+		KeyPressEvent, KeyReleaseEvent
 	};
 
 	class Event 
@@ -25,6 +30,7 @@ namespace PX {
 
 #pragma region Event Classes
 
+	// WINDOW EVENTS
 	class WindowCloseEvent : public Event
 	{
 	public:
@@ -65,6 +71,8 @@ namespace PX {
 		uint32_t m_Height;
 	};
 
+
+	// MOUSE EVENTS
 	class MouseMoveEvent : public Event
 	{
 	public:
@@ -79,6 +87,80 @@ namespace PX {
 	private:
 		double m_X, m_Y;
 
+	};
+
+	class MousePressEvent : public Event
+	{
+	public:
+		MousePressEvent(uint32_t keyCode)
+			: m_KeyCode(keyCode)
+		{}
+
+		uint32_t GetKeyCode()
+		{
+			return m_KeyCode;
+		}
+
+		EVENT_TYPE(MousePressEvent)
+
+	private:
+		uint32_t m_KeyCode;
+	};
+
+	class MouseReleaseEvent : public Event
+	{
+	public:
+		MouseReleaseEvent(uint32_t keyCode)
+			: m_KeyCode(keyCode)
+		{}
+
+		uint32_t GetKeyCode()
+		{
+			return m_KeyCode;
+		}
+
+		EVENT_TYPE(MousePressEvent)
+
+	private:
+		uint32_t m_KeyCode;
+	};
+
+
+	// KEY EVENTS
+	class KeyReleaseEvent : public Event
+	{
+	public:
+		KeyReleaseEvent(uint32_t keyCode)
+			: m_KeyCode(keyCode)
+		{}
+
+		uint32_t GetKeyCode()
+		{
+			return m_KeyCode;
+		}
+
+		EVENT_TYPE(MousePressEvent)
+
+	private:
+		uint32_t m_KeyCode;
+	};
+
+	class KeyPressEvent : public Event
+	{
+	public:
+		KeyPressEvent(uint32_t keyCode)
+			: m_KeyCode(keyCode)
+		{}
+
+		uint32_t GetKeyCode()
+		{
+			return m_KeyCode;
+		}
+
+		EVENT_TYPE(MousePressEvent)
+
+	private:
+		uint32_t m_KeyCode;
 	};
 
 #pragma endregion
