@@ -5,8 +5,6 @@
 #include "../Renderer/Shader.h"
 #include "../Event/Event.h"
 #include "../Renderer/Renderer.h"
-#include "../Renderer/Layer.h"
-#include "../Renderer/LayerManager.h"
 
 namespace PX {
 
@@ -17,12 +15,6 @@ namespace PX {
 		virtual void Start();
 		virtual void Shutdown();
 		void Run();
-
-		// Methods to interface with Layer Manager
-		void PushLayer(Layer* layer) { m_LayerManager.PushLayer(layer); }
-		void PushOverlayLayer(Layer* layer) { m_LayerManager.PushOverlayLayer(layer); }
-		void PopLayer() { m_LayerManager.PopLayer(); }
-		void PopOverlayLayer() { m_LayerManager.PopOverlayLayer(); }
 
 		static Application* GetApplicationInstance();
 		static Shared<Window> GetApplicationWindow();
@@ -41,14 +33,12 @@ namespace PX {
 		virtual void OnEvent(Event& event) {}
 
 	protected:
-		virtual void OnUpdate();
-		virtual void OnRender();
+		virtual void Update();
+		virtual void Render();
 
 	private:
 		static inline Application* m_pInstance = nullptr;
 		static inline Shared<Window> m_Window;
-
-		LayerManager m_LayerManager;
 
 		// Example default program
 		Shared<VertexBuffer> vbo;

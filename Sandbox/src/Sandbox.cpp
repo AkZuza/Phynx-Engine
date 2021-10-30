@@ -1,5 +1,4 @@
 #include "Sandbox.h"
-#include "ExampleLayer.h"
 #include <Windows.h>
 
 
@@ -18,13 +17,10 @@ void Sandbox::Start()
 	data.Height = 900;
 	data.WindowName = "Sandbox";
 
-
 	CreateApplicationWindow(data);
-
-	PushLayer(new ExampleLayer());
 }
 
-void Sandbox::OnUpdate()
+void Sandbox::Update()
 {
 	PX::Renderer::Clear(0.3f, 0.9f, 0.7f, 1.f);
 
@@ -37,19 +33,7 @@ void Sandbox::OnUpdate()
 		{ 0.3f, 0.7f, 0.8f, 1.f }
 	);
 
-	//std::cout << "Mouse Pos X: " << PX::MouseInput::GetXPos() << "   Y: " << PX::MouseInput::GetYPos() << "\n"; 
-
-	for (uint32_t i = (uint32_t)PX::Key::A; i <= (uint32_t)PX::Key::Z; ++i)
-	{
-		if (PX::KeyInput::IsPressed(i))
-		{
-			std::cout << PX::KeyInput::KeyCodeToChar(i) << "\n";
-		}
-	}
-
-	if (PX::MouseInput::IsPressed(PX::MouseButton::Left))
-		std::cout << "Clicked" << "\n";
-
+	std::cout << "Mouse Pos X: " << PX::MouseInput::GetXPos() << "   Y: " << PX::MouseInput::GetYPos() << "\n"; 
 
 	PX::Renderer2D::End();
 	PX::Renderer2D::Flush();
@@ -58,4 +42,23 @@ void Sandbox::OnUpdate()
 void Sandbox::OnEvent(PX::Event& event)
 {
 	PX::EventDispatcher dispatcher(event);
+
+	/*dispatcher.Dispatch<PX::WindowMoveEvent>([this](PX::Event& event)
+		{
+			this->OnWindowMoveEvent(dynamic_cast<PX::WindowMoveEvent&>(event));
+		});*/
+
+	dispatcher.Dispatch<PX::WindowMoveEvent>(BIND_EVENT_FN(OnWindowMoveEvent));
+	dispatcher.Dispatch<PX::MouseMoveEvent>(BIND_EVENT_FN(OnMouseMoveEvent));
+
+}
+
+void Sandbox::OnWindowMoveEvent(PX::WindowMoveEvent& event)
+{
+	int x = 0;
+}
+
+void Sandbox::OnMouseMoveEvent(PX::MouseMoveEvent& event)
+{
+	std::cout << "Mouse Pos X: " << event.GetXPos() << "   Y: " << event.GetYPos() << std::endl;
 }

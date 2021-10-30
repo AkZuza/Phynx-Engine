@@ -95,7 +95,7 @@ namespace PX {
 		shader = Shader::Create(vs, fs);
 	}
 
-	void Application::OnUpdate()
+	void Application::Update()
 	{
 		Renderer::Clear(0.3f, 0.9f, 0.6f, 1.f);
 
@@ -104,7 +104,7 @@ namespace PX {
 		Renderer::DrawIndexed(3);
 	}
 
-	void Application::OnRender()
+	void Application::Render()
 	{
 
 	}
@@ -116,29 +116,12 @@ namespace PX {
 
 	void Application::Run()
 	{
-		// Create
-
-		auto& layers = m_LayerManager.GetLayers();
-
-		for (auto layer : m_LayerManager.GetLayers())
-			layer->OnCreate();
-
 		while (m_Window->IsRunning())
 		{
-			/*OnUpdate();
-			OnRender();*/
-
-			for (int i = 0; i < layers.size(); ++i)
-				layers[i]->OnUpdate();
-
-			for (int i = 0; i < layers.size(); ++i)
-				layers[i]->OnRender();
-
+			Update();
+			Render();
 			m_Window->Update();
 		}
-
-		for (auto layer : m_LayerManager.GetLayers())
-			layer->OnDestroy();
 	}
 
 	Application* Application::GetApplicationInstance()
