@@ -20,13 +20,15 @@ project "Phynx"
         "libs/glfw/include",
         "libs/Glad/include",
         "libs/spdlog/include",
-        "libs/glm"
+        "libs/glm",
+        "libs/yaml-cpp/include"
     }
 
     links {
         "glfw3",
         "Glad",
         "opengl32",
+        "yaml-cpp"
     }
 
     filter "configurations:Release"

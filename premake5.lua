@@ -11,6 +11,7 @@ workspace "Phynx-Engine"
     group "Dependencies"
         include "Phynx/libs/glfw"
         include "Phynx/libs/Glad"
+        include "Phynx/libs/yaml-cpp"
 
     group ""
     
