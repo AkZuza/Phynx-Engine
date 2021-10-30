@@ -30,6 +30,7 @@ namespace PX {
 			return nullptr;
 		}
 
+		PX_CORE_INFO("Reading shader data from VS: {0} and FS: {1}", vertex_shader_path, fragment_shader_path);
 		while (std::getline(in_vs, line))
 			vstream << line << "\n";
 		vs = vstream.str();
@@ -37,6 +38,8 @@ namespace PX {
 		while (std::getline(in_fs, line))
 			fstream << line << "\n";
 		fs = fstream.str();
+
+		PX_CORE_INFO("Finished reading shader data");
 
 		return Create(vs, fs);
 	}
